@@ -1,4 +1,5 @@
 const rdf = require("rdf");
+const { NAMESPACE, RDF_SYNTAX_IRI } = require("../utils/constants");
 
 function turtleTransform(graphs) {
   const profile = rdf.environment.createProfile();
@@ -21,6 +22,37 @@ function turtleTransform(graphs) {
   return turtle;
 }
 
+function getRdfStructure(namespace, sub, tripleData) {
+  return {
+    "@context": {
+      "@vocab": RDF_SYNTAX_IRI,
+      rdf: RDF_SYNTAX_IRI,
+    },
+    "@id": namespace(`${sub}/${tripleData.id}`),
+    type: namespace(`${sub}`),
+  };
+}
+
+function getPropertiesRdfData(namespace, sub, tripleData) {
+  let propertiesRdfData = {
+    "@context": {
+      "@vocab": `${NAMESPACE}${sub}/`,
+    },
+    "@id": namespace(`${sub}/${tripleData.id}`),
+  };
+
+  Object.keys(tripleData).map((key) => {
+    propertiesRdfData[key] = rdf.factory.literal(
+      tripleData[key],
+      rdf.xsdns("string")
+    );
+  });
+
+  return propertiesRdfData;
+}
+
 module.exports = {
   turtleTransform,
+  getRdfStructure,
+  getPropertiesRdfData,
 };
