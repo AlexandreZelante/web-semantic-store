@@ -1,27 +1,6 @@
 const rdf = require("rdf");
 const { NAMESPACE, RDF_SYNTAX_IRI } = require("../utils/constants");
 
-function turtleTransform(graphs) {
-  const profile = rdf.environment.createProfile();
-
-  let turtle = [];
-
-  graphs.map((graph) => {
-    const turtleParsed = graph
-      .toArray()
-      .sort(function (a, b) {
-        return a.compare(b);
-      })
-      .map(function (stmt) {
-        return stmt.toTurtle(profile);
-      });
-
-    turtle = turtle.concat(turtleParsed);
-  });
-
-  return turtle;
-}
-
 function getRdfStructure(namespace, sub, tripleData) {
   return {
     "@context": {
@@ -49,6 +28,27 @@ function getPropertiesRdfData(namespace, sub, tripleData) {
   });
 
   return propertiesRdfData;
+}
+
+function turtleTransform(graphs) {
+  const profile = rdf.environment.createProfile();
+
+  let turtle = [];
+
+  graphs.map((graph) => {
+    const turtleParsed = graph
+      .toArray()
+      .sort(function (a, b) {
+        return a.compare(b);
+      })
+      .map(function (stmt) {
+        return stmt.toTurtle(profile);
+      });
+
+    turtle = turtle.concat(turtleParsed);
+  });
+
+  return turtle;
 }
 
 module.exports = {
