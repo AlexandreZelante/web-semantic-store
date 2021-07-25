@@ -1,0 +1,188 @@
+@prefix : <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho> .
+
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho> rdf:type owl:Ontology .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral
+rdf:PlainLiteral rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#boolean
+rdf:boolean rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#double
+rdf:double rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#string
+rdf:string rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/montadoPor
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/montadoPor> rdf:type owl:ObjectProperty ;
+                                                                         rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                         rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Carrinho> ;
+                                                                         rdfs:range <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Cliente> .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/ofereceServico
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/ofereceServico> rdf:type owl:ObjectProperty ;
+                                                                             rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                             rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja> ;
+                                                                             rdfs:range <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Servico> .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/pertence
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/pertence> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                       rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Carrinho> ;
+                                                                       rdfs:range <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja> .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/possui
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/possui> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                     rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Carrinho> ;
+                                                                     rdfs:range <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Produto> .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/temProduto
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/temProduto> rdf:type owl:ObjectProperty ;
+                                                                         rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                         rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja> ;
+                                                                         rdfs:range <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Produto> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/atividade
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/atividade> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:subPropertyOf owl:topDataProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja> ;
+                                                                        rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/categoria
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/categoria> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:subPropertyOf owl:topDataProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Produto> ;
+                                                                        rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/concluido
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/concluido> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:subPropertyOf owl:topDataProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Carrinho> .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/cpf
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/cpf> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:subPropertyOf owl:topDataProperty ;
+                                                                  rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Cliente> ;
+                                                                  rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/idCliente
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/idCliente> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:subPropertyOf owl:topDataProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Cliente> ;
+                                                                        rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/idUsuarioCarrinho
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/idUsuarioCarrinho> rdf:type owl:DatatypeProperty ;
+                                                                                rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Carrinho> ;
+                                                                                rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/link
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/link> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:subPropertyOf owl:topDataProperty ;
+                                                                   rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja> ;
+                                                                   rdfs:range xsd:anyURI .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/localizacao
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/localizacao> rdf:type owl:DatatypeProperty ;
+                                                                          rdfs:subPropertyOf owl:topDataProperty ;
+                                                                          rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja> ;
+                                                                          rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/nomeCliente
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/nomeCliente> rdf:type owl:DatatypeProperty ;
+                                                                          rdfs:subPropertyOf owl:topDataProperty ;
+                                                                          rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Cliente> ;
+                                                                          rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/nomeProduto
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/nomeProduto> rdf:type owl:DatatypeProperty ;
+                                                                          rdfs:subPropertyOf owl:topDataProperty ;
+                                                                          rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Produto> ;
+                                                                          rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/preco
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/preco> rdf:type owl:DatatypeProperty ;
+                                                                    rdfs:subPropertyOf owl:topDataProperty ;
+                                                                    rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Produto> ;
+                                                                    rdfs:range rdf:double .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/senha
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/senha> rdf:type owl:DatatypeProperty ;
+                                                                    rdfs:subPropertyOf owl:topDataProperty ;
+                                                                    rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Cliente> ;
+                                                                    rdfs:range rdf:string .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/usuario
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/usuario> rdf:type owl:DatatypeProperty ;
+                                                                      rdfs:subPropertyOf owl:topDataProperty ;
+                                                                      rdfs:domain <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Cliente> ;
+                                                                      rdfs:range rdf:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Carrinho
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Carrinho> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Cliente
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Cliente> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Produto
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Produto> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Servico
+<http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Servico> rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

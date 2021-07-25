@@ -1,4 +1,14 @@
-const { createAndStoreTriple } = require("../libs/graphdb");
+const {
+  createAndStoreTriple,
+  executeQuery,
+  getDataFromTypes,
+} = require("../libs/graphdb");
+const { getIdsByQueryResponse } = require("../utils/graphdb");
+const {
+  getAllIdsByType,
+  getLojaIdByAtividade,
+  getLojaIdByNome,
+} = require("../utils/queries");
 
 async function create(req, res) {
   // Pega loja
@@ -14,17 +24,23 @@ async function create(req, res) {
 async function list(req, res) {
   console.log(req.query);
 
-  let responseData = [];
+  let query;
 
   if (req.query.hasOwnProperty("nome")) {
-    // Query por nome
+    query = getLojaIdByNome(req.query.nome);
   } else if (req.query.hasOwnProperty("atividade")) {
     // Query por atividade
+    query = getLojaIdByAtividade(req.query.atividade);
   } else {
     // Retorna todos
+    query = getAllIdsByType("Loja");
   }
 
-  res.json(responseData);
+  const queryResponse = await executeQuery(query);
+  const lojasIds = getIdsByQueryResponse(queryResponse);
+  const dados = await getDataFromTypes(lojasIds, "Loja");
+
+  res.json(dados);
 }
 
 module.exports = {
