@@ -1,4 +1,4 @@
-const { RDF_SYNTAX_IRI } = require("../utils/constants");
+const { RDF_SYNTAX_IRI, NAMESPACE } = require("../utils/constants");
 
 const PREFIXES = `PREFIX ws: <http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/> PREFIX rdf: <${RDF_SYNTAX_IRI}>`;
 
@@ -28,11 +28,19 @@ function getDataFromId(type, id) {
   return `${PREFIXES} ${DYNAMIC_PREFIX} SELECT ?predicate ?object WHERE { data:${id} ?predicate ?object . }`;
 }
 
+function getProdutosByLoja(idLoja) {
+  const DYNAMIC_PREFIX = getDynamicPrefix("Produto");
+
+  // Get Produtos de Loja X
+  return `${PREFIXES} ${DYNAMIC_PREFIX} SELECT ?subject ?x WHERE { ?subject a ws:Produto . ?subject data:produtoDe ?x filter(str(?x)="${NAMESPACE}Loja/${idLoja}") }`;
+}
+
 module.exports = {
   getAllIdsByType,
   getLojaIdByAtividade,
   getLojaIdByNome,
   getDataFromId,
+  getProdutosByLoja,
 };
 
 // PREFIX ws: http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/
