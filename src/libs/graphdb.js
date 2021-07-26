@@ -26,8 +26,6 @@ async function createAndStoreTriple(sub, tripleData) {
     headers: { "content-type": "text/turtle" },
   });
 
-  console.log(turtle);
-
   return turtle;
 }
 
@@ -53,7 +51,7 @@ async function getDataFromTypes(ids, type) {
     const queryResponse = await executeQuery(query);
     const formattedObject = formatObject(queryResponse);
 
-    formattedObjectArray.push(formattedObject);
+    formattedObjectArray.push({ id: id, ...formattedObject });
   }
 
   return formattedObjectArray;

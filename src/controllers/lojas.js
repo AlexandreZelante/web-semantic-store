@@ -3,6 +3,7 @@ const {
   executeQuery,
   getDataFromTypes,
 } = require("../libs/graphdb");
+const uuid = require("uuid");
 const { getIdsByQueryResponse } = require("../utils/graphdb");
 const {
   getAllIdsByType,
@@ -15,15 +16,13 @@ async function create(req, res) {
   const { sub, data } = req.body;
 
   // Chama a criação de loja do graphDb (Se comunica com o service)
-  const turtle = await createAndStoreTriple(sub, data);
+  const turtle = await createAndStoreTriple(sub, { id: uuid.v4(), ...data });
 
   // Devolve para o user
   res.json(turtle);
 }
 
 async function list(req, res) {
-  console.log(req.query);
-
   let query;
 
   if (req.query.hasOwnProperty("nome")) {
