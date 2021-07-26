@@ -35,12 +35,19 @@ function getProdutosByLoja(idLoja) {
   return `${PREFIXES} ${DYNAMIC_PREFIX} SELECT ?subject ?x WHERE { ?subject a ws:Produto . ?subject data:produtoDe ?x filter(str(?x)="${NAMESPACE}Loja/${idLoja}") }`;
 }
 
+function getClienteData(username, password) {
+  const DYNAMIC_PREFIX = getDynamicPrefix("Cliente");
+
+  return `${PREFIXES} ${DYNAMIC_PREFIX} SELECT ?subject ?predicate ?object  WHERE { ?subject a ws:Cliente . ?subject data:username ?username . ?subject data:password ?password . ?subject ?predicate ?object filter(str(?username)="${username}") filter(str(?password)="${password}")}`;
+}
+
 module.exports = {
   getAllIdsByType,
   getLojaIdByAtividade,
   getLojaIdByNome,
   getDataFromId,
   getProdutosByLoja,
+  getClienteData,
 };
 
 // PREFIX ws: http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/
