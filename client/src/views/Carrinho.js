@@ -108,8 +108,13 @@ function Carrinho() {
             total,
           },
         })
-        .finally((err) => {
+        .then((response) => {
           localStorage.removeItem("carrinho");
+          history.push("/admin/concluido", {
+            idCarrinho: response.data.cartId,
+          });
+        })
+        .catch(() => {
           history.push("/admin/concluido");
         });
     } else {

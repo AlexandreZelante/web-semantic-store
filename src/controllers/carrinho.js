@@ -16,17 +16,19 @@ async function create(req, res) {
   //Para cada idProduto cria um ws:Carrinho/possui com valor ws:Produto/idPRoduto\
   if (data.produtos && data.produtos.length > 0) produtos = data.produtos;
 
+  const cartId = uuid.v4();
+
   for (const idProduto of produtos) {
     const turtle = await createAndStoreTriple(sub, {
-      id: uuid.v4(),
-      possui: `${NAMESPACE}${idProduto}`,
+      id: cartId,
+      possui: `${NAMESPACE}Produto/${idProduto}`,
       total: data.total,
     });
     responseArray.push(turtle);
   }
 
   // Devolve para o user
-  res.json(responseArray);
+  res.json({ cartId, ...responseArray });
 }
 
 module.exports = {

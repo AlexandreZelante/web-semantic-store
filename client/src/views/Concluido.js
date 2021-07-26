@@ -16,8 +16,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -25,12 +25,22 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
-  Table,
   Row,
   Col,
 } from "reactstrap";
 
 function Concluido() {
+  const location = useLocation();
+  const [cartId, setCartId] = useState("");
+
+  console.log("location", location);
+
+  useEffect(() => {
+    if (location && location.state && location.state.idCarrinho) {
+      setCartId(location.state.idCarrinho);
+    }
+  }, [location, setCartId]);
+
   return (
     <>
       <div className="content">
@@ -42,6 +52,9 @@ function Concluido() {
                 <p className="card-category">
                   Esperamos que tenha gostado! É uma honra poder atender você.
                 </p>
+                {cartId && (
+                  <p className="card-category">Número do carrinho: {cartId}</p>
+                )}
               </CardHeader>
               <CardBody></CardBody>
             </Card>

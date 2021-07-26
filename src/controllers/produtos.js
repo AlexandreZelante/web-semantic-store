@@ -3,6 +3,7 @@ const {
   executeQuery,
   getDataFromTypes,
 } = require("../libs/graphdb");
+const uuid = require("uuid");
 const { getIdsByQueryResponse } = require("../utils/graphdb");
 const {
   getAllIdsByType,
@@ -29,6 +30,8 @@ async function list(req, res) {
     // Retorna todos
     query = getAllIdsByType("Produto");
   }
+
+  console.log("query", query);
 
   const queryResponse = await executeQuery(query);
   const produtosIds = getIdsByQueryResponse(queryResponse);
