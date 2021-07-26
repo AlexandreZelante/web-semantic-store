@@ -16,10 +16,12 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useState, useEffect } from "react";
 //import Titulo from "components/Titulo/Titulo.js";
 // react plugin used to create charts
 import { Line, Pie } from "react-chartjs-2";
+import { useHistory } from "react-router-dom";
+import api from "../services/api";
 // reactstrap components
 import {
   Button,
@@ -43,6 +45,78 @@ import {
 } from "variables/charts.js";
 
 function Carrinho() {
+  const [products, setProducts] = useState([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    const carrinho = localStorage.getItem("carrinho");
+    if (carrinho) {
+      const produtos = JSON.parse(carrinho);
+      console.log("produtos", produtos);
+      api
+        .post("/produtos/list", {
+          produtos,
+        })
+        .then((response) => {
+          setProducts(response.data);
+        });
+    }
+  }, []);
+
+  function removeProductFromCart(product) {
+    let carrinho = JSON.parse(localStorage.getItem("carrinho"));
+
+    if (carrinho && Array.isArray(carrinho)) {
+      const filteredCarrinho = carrinho.filter(
+        (idProduto) => idProduto !== product.id
+      );
+
+      console.log({ filteredCarrinho });
+      localStorage.setItem("carrinho", JSON.stringify(filteredCarrinho));
+    }
+
+    const filteredProducts = products.filter(
+      (stateProduct) => stateProduct.id !== product.id
+    );
+    setProducts(filteredProducts);
+
+    // alert(`${product.nomeProduto} adicionado ao carrinho`);
+  }
+
+  function getSoma() {
+    let valor = 0;
+
+    products.forEach((product) => {
+      const preco = parseInt(product.preco);
+      valor += preco;
+    });
+
+    return valor;
+  }
+
+  function finalizarCompra() {
+    let carrinho = JSON.parse(localStorage.getItem("carrinho"));
+    const total = String(getSoma());
+
+    if (carrinho) {
+      console.log("vai chamar com ", carrinho);
+      api
+        .post("/carrinho", {
+          sub: "Carrinho",
+          data: {
+            produtos: carrinho,
+            total,
+          },
+        })
+        .finally((err) => {
+          localStorage.removeItem("carrinho");
+          history.push("/admin/concluido");
+        });
+    } else {
+      history.push("/admin/concluido");
+    }
+  }
+
   return (
     <>
       <div className="content">
@@ -50,68 +124,60 @@ function Carrinho() {
           <Col lg="8" md="8" sm="10" className="mb-3">
             <h1>Carrinho</h1>
           </Col>
-          <Col lg="4" md="4" sm="10" className="mr-md-0 mr-3">
-            <Button
-              className="btn float-right mr-3"
-              type="submit"
-              color="primary"
-              href="/admin/concluido"
-              rel="noopener noreferrer"
-            >
-              Finalizar compra
-            </Button>
-          </Col>
         </Row>
         <Row>
-          <Col lg="4" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-shop text-primary" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      {/* <p className="card-category">Nome Loja</p> */}
-                      <CardTitle tag="p">Nome Produto</CardTitle>
-                      {/*<p />*/}
-                    </div>
-                    <div className="stats">
-                      <p>
-                        <i className="nc-icon nc-tag-content" /> Categoria:
-                      </p>
-                      <p>
-                        <i className="nc-icon nc-money-coins" /> Preço: R$ 1M
-                      </p>
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
+          {products.map((product) => (
+            <Col lg="4" md="6" sm="6">
+              <Card className="card-stats">
+                <CardBody>
+                  <Row>
+                    <Col md="4" xs="5">
+                      <div className="icon-big text-center icon-warning">
+                        <i className="nc-icon nc-shop text-primary" />
+                      </div>
+                    </Col>
+                    <Col md="8" xs="7">
+                      <div className="numbers">
+                        <CardTitle tag="p">{product.nomeProduto}</CardTitle>
+                      </div>
+                      <div className="stats">
+                        <p>
+                          <i className="nc-icon nc-tag-content" /> Categoria:{" "}
+                          {product.categoria}
+                        </p>
+                        <p>
+                          <i className="nc-icon nc-money-coins" /> Preço: R${" "}
+                          {product.preco}
+                        </p>
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter>
+                  <hr />
 
-                <Button
-                  className="btn float-right mr-3"
-                  type="submit"
-                  color="danger"
-                  href="/admin/concluido"
-                  rel="noopener noreferrer"
-                >
-                  Remover
-                </Button>
-              </CardFooter>
-            </Card>
-          </Col>
+                  <Button
+                    className="btn float-right mr-3"
+                    type="submit"
+                    color="danger"
+                    rel="noopener noreferrer"
+                    onClick={() => removeProductFromCart(product)}
+                  >
+                    Remover
+                  </Button>
+                </CardFooter>
+              </Card>
+            </Col>
+          ))}
         </Row>
         <Row>
           <Col lg="4" md="4" sm="10" className="mb-3">
+            <h3>{`Total: R$ ${getSoma()}`}</h3>
             <Button
               className="btn"
               type="submit"
               color="primary"
-              href="/admin/concluido"
+              onClick={() => finalizarCompra()}
               rel="noopener noreferrer"
             >
               Finalizar compra

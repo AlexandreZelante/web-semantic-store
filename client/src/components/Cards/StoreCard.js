@@ -24,7 +24,7 @@ export default function StoreCard(props) {
           <Col md="8" xs="7">
             <div className="numbers">
               {/* <p className="card-category">Nome Loja</p> */}
-              <CardTitle tag="p"> {props.nomeLoja} </CardTitle>
+              <CardTitle tag="p"> {props.store.nomeLoja} </CardTitle>
               {/*<p />*/}
             </div>
           </Col>
@@ -34,10 +34,15 @@ export default function StoreCard(props) {
         <hr />
         <div className="stats">
           <p className="atividade">
-            <i className="nc-icon nc-tag-content" /> Atividade: agricultura
+            <i className="nc-icon nc-tag-content" /> Atividade:{" "}
+            {props.store.atividade}
           </p>
           <p className="localizacao">
-            <i className="nc-icon nc-pin-3" /> Localização: aqui
+            <i className="nc-icon nc-pin-3" /> Localização:{" "}
+            {props.store.localizacao}
+          </p>
+          <p className="localizacao">
+            <i className="nc-icon nc-globe" /> Link: {props.store.link}
           </p>
         </div>
       </CardFooter>

@@ -4,7 +4,11 @@ const {
   getDataFromTypes,
 } = require("../libs/graphdb");
 const { getIdsByQueryResponse } = require("../utils/graphdb");
-const { getAllIdsByType, getProdutosByLoja } = require("../utils/queries");
+const {
+  getAllIdsByType,
+  getProdutosByLoja,
+  getDataFromId,
+} = require("../utils/queries");
 
 async function create(req, res) {
   const { sub, data } = req.body;
@@ -33,7 +37,16 @@ async function list(req, res) {
   res.json(dados);
 }
 
+async function listByIds(req, res) {
+  const { produtos } = req.body;
+
+  const dados = await getDataFromTypes(produtos, "Produto");
+
+  res.json(dados);
+}
+
 module.exports = {
   create,
   list,
+  listByIds,
 };

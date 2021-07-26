@@ -18,6 +18,7 @@ routes.get("/lojas", lojasController.list);
 
 routes.post("/produtos", produtosController.create);
 routes.get("/produtos", produtosController.list);
+routes.post("/produtos/list", produtosController.listByIds);
 
 routes.post("/carrinho", carrinhoController.create);
 

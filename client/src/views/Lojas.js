@@ -19,7 +19,8 @@
 import React, { useState, useEffect } from "react";
 //import Titulo from "components/Titulo/Titulo.js";
 // react plugin used to create charts
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import api from "../services/api";
 // reactstrap components
 import {
   Button,
@@ -45,43 +46,31 @@ import {
 import StoreCard from "components/Cards/StoreCard.js";
 
 function Lojas() {
-  const [stores, setStores] = useState([
-    {
-      type: "http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja",
-      atividade: "Multicoisas",
-      link: "https://www.americanas.com.br/",
-      localizacao: "5B",
-      nomeLoja: "Americanas",
-    },
-    {
-      type: "http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja",
-      atividade: "eletronicos",
-      link: "https://www.kabum.com.br/",
-      localizacao: "6A",
-      nomeLoja: "Kabum",
-    },
-    {
-      type: "http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja",
-      atividade: "roupas",
-      link: "https://www.renner.com.br/",
-      localizacao: "6B",
-      nomeLoja: "Renner",
-    },
-    {
-      type: "http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja",
-      atividade: "calçados",
-      link: "https://www.sidewalk.com.br/",
-      localizacao: "6C",
-      nomeLoja: "Sidewalk",
-    },
-    {
-      type: "http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja",
-      atividade: "bebidas",
-      link: "https://www.reidomate.com.br/",
-      localizacao: "6D",
-      nomeLoja: "Rei do Mate",
-    },
-  ]);
+  const [stores, setStores] = useState([]);
+  const [searchType, setSearchType] = useState("atividade");
+  const [text, setText] = useState("");
+
+  const history = useHistory();
+
+  useEffect(() => {
+    api.get("/lojas").then((response) => {
+      setStores(response.data);
+    });
+  }, []);
+
+  async function getLojas(e) {
+    e.preventDefault();
+
+    api
+      .get("/lojas", {
+        params: {
+          [searchType]: text,
+        },
+      })
+      .then((response) => {
+        setStores(response.data);
+      });
+  }
 
   return (
     <>
@@ -95,30 +84,28 @@ function Lojas() {
           <Col lg="10" md="10" sm="10" className="mb-3">
             <form className="form-horizontal form-validate form-inline">
               <div className="form-group">
-                <select class="form-control input-small mr-sm-2">
-                  <option>Atividade</option>
-                  <option>Nome</option>
+                <select
+                  value={searchType}
+                  onChange={(e) => setSearchType(e.target.value)}
+                  className="form-control input-small mr-sm-2"
+                >
+                  <option value="atividade">Atividade</option>
+                  <option value="nome">Nome</option>
                 </select>
 
                 <Input
                   className="input-small mr-sm-2"
-                  placeholder="Nome da loja"
+                  placeholder="Escreva aqui"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
                 />
               </div>
-
-              {/* 
-              <InputGroup className="">
-                <Input placeholder="Search..." />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText></InputGroupText>
-                </InputGroupAddon>
-              </InputGroup> */}
               <Button
                 className="btn"
                 type="submit"
                 color="primary"
-                href="/"
                 rel="noopener noreferrer"
+                onClick={getLojas}
               >
                 <i className="nc-icon nc-zoom-split" /> Pesquisar
               </Button>
@@ -138,13 +125,21 @@ function Lojas() {
           </Col>
         </Row>
         <Row>
-          {stores.map(({ type, atividade, link, localizacao, nomeLoja }) => (
-            <Col lg="4" md="6" sm="6">
-              <Link to="/admin/loja">
-                <StoreCard>
-                  <CardTitle tag="p">{nomeLoja}</CardTitle>
-                </StoreCard>
-              </Link>
+          {stores.map((store) => (
+            <Col lg="4" md="6" sm="6" key={store.id}>
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  history.push({
+                    pathname: "/admin/loja",
+                    state: {
+                      store,
+                    },
+                  })
+                }
+              >
+                <StoreCard store={store} />
+              </div>
             </Col>
           ))}
         </Row>
