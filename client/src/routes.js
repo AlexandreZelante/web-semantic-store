@@ -22,6 +22,7 @@ import Loja from "views/Loja.js";
 import Carrinho from "views/Carrinho.js";
 import Concluido from "views/Concluido.js";
 import Notifications from "views/Notifications.js";
+import Login from "views/Login.js";
 import Icons from "views/Icons.js";
 import Typography from "views/Typography.js";
 import TableList from "views/Tables.js";
@@ -30,6 +31,13 @@ import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-bank",
+    component: Login,
+    layout: "/admin",
+  },
   {
     path: "/dashboard",
     name: "Dashboard",

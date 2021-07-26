@@ -47,14 +47,17 @@ import StoreCard from "components/Cards/StoreCard.js";
 
 function Lojas() {
   const [stores, setStores] = useState([]);
+  const [initialStores, setInitialStores] = useState([]);
   const [searchType, setSearchType] = useState("atividade");
   const [text, setText] = useState("");
+  const [isAlphabeticalOrder, setIsAlphabeticalOrder] = useState(false);
 
   const history = useHistory();
 
   useEffect(() => {
     api.get("/lojas").then((response) => {
       setStores(response.data);
+      setInitialStores(response.data);
     });
   }, []);
 
@@ -68,8 +71,26 @@ function Lojas() {
         },
       })
       .then((response) => {
+        setInitialStores(response.data);
         setStores(response.data);
       });
+  }
+
+  function toggleAlhpabeticalOrder() {
+    if (!isAlphabeticalOrder) {
+      const toSortStores = [...stores];
+      toSortStores.sort(function (a, b) {
+        var textA = a.nomeLoja.toUpperCase();
+        var textB = b.nomeLoja.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
+
+      setStores(toSortStores);
+      setIsAlphabeticalOrder(true);
+    } else {
+      setStores(initialStores);
+      setIsAlphabeticalOrder(false);
+    }
   }
 
   return (
@@ -117,8 +138,8 @@ function Lojas() {
               id="ordericons"
               type="submit"
               color="danger"
-              href="/"
               rel="noopener noreferrer"
+              onClick={() => toggleAlhpabeticalOrder()}
             >
               <i className="bold nc-icon nc-minimal-down" />
             </Button>
