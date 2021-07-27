@@ -22,6 +22,4 @@ routes.post("/produtos/list", produtosController.listByIds);
 
 routes.post("/carrinho", carrinhoController.create);
 
-// No carrinho, devemos fazer para cada produto adicionado a ele um request para armazenar o ws:Carrinho/possui com o valor da referencia de cada produto. Mesmos dados, só muda o produto
-
 module.exports = routes;

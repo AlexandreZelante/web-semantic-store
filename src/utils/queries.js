@@ -49,20 +49,3 @@ module.exports = {
   getProdutosByLoja,
   getClienteData,
 };
-
-// PREFIX ws: http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/
-// PREFIX info: http://www.semanticweb.org/alexa/ontologies/2021/5/trabalho/Loja/
-// PREFIX rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
-
-// # Get todas as lojas
-// SELECT ?subject WHERE { ?subject a ws:Loja . }
-
-// # Get Loja por atividade
-// SELECT ?subject ?object WHERE {
-//     ?subject info:atividade ?object
-// }
-
-// # Get loja por nome
-// SELECT ?subject ?predicate ?object WHERE {
-//     ?subject info:nomeLoja "Americanas"
-// }

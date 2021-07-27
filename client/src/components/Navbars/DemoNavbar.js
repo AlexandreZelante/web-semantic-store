@@ -107,7 +107,7 @@ function Header(props) {
     >
       <Container fluid>
         <div className="navbar-wrapper">
-          <NavbarBrand href="/">{getBrand()}</NavbarBrand>
+          <NavbarBrand href="/">RDF Stores</NavbarBrand>
         </div>
         <NavbarToggler onClick={toggle}>
           <span className="navbar-toggler-bar bar1" />
